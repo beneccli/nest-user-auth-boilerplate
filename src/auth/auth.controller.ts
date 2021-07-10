@@ -10,7 +10,9 @@ import { AuthGuard } from '@nestjs/passport';
 import { Response } from 'express';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Authentication')
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -32,7 +34,7 @@ export class AuthController {
   ): Promise<any> {
     // Retrieve user and generate jwt token
     // let user = await User.findOne({ id: userId });
-    const user = { name: 'hello World' };
+    const user = { id: 1, name: 'hello World' };
     const jwtSplit = this.jwtService.sign(user).split('.');
 
     response.cookie('jwt', `${jwtSplit[0]}.${jwtSplit[1]}`, {

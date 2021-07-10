@@ -7,6 +7,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from '../auth/strategies/jwt.strategy';
 import * as dotenv from 'dotenv';
 import { UsersService } from 'src/users/users.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from 'src/users/entities/user.entity';
 
 dotenv.config(); // needed to access process.env.*
 
@@ -17,6 +19,7 @@ dotenv.config(); // needed to access process.env.*
       secret: process.env.APP_SECRET,
       signOptions: { expiresIn: process.env.JWT_EXPIRATION },
     }),
+    TypeOrmModule.forFeature([User]),
   ],
   controllers: [AuthController],
   providers: [UsersService, GoogleStrategy, JwtStrategy, AuthService],
