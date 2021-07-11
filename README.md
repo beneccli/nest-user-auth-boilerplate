@@ -24,9 +24,11 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This boilerplate integrates everything necessary for user authentication and authorization.
 
-**Update** This boilerplate integrates everything necessary for jwt (user session, authorization) and google (user authentication). Jwt can come from either cookies (jwt and jwt-secure) or Authorization header.
+Authentication can be done by social and local auth (here only social auth with google is implemented, easy to add more passport strategies).
+
+Authorization accepts 2 methods: Authorization bearer header or user cookies session (`jwt` cookie and `jwt-secure` cookie).
 
 ## Installation
 
