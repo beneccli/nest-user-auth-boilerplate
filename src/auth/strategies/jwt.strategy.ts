@@ -1,6 +1,7 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
+import { UsersService } from 'src/users/users.service';
 
 const cookieExtractor = (req: any): string => {
   if (req) {
@@ -15,7 +16,7 @@ const cookieExtractor = (req: any): string => {
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
-  constructor() {
+  constructor(private usersService: UsersService) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         cookieExtractor,
@@ -30,7 +31,9 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     payload: any,
     done: (err: any, user: any, info?: any) => void,
   ) {
-    if (!payload) return done(null, false);
-    return done(null, payload);
+    if (!payload?.id) return done(null, false);
+    const userId = payload?.id;
+    const user = await this.usersService.findOne(userId);
+    return done(null, user);
   }
 }

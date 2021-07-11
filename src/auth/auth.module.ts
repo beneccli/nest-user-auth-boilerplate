@@ -9,6 +9,8 @@ import * as dotenv from 'dotenv';
 import { UsersService } from 'src/users/users.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/users/entities/user.entity';
+import { OAuthProviderService } from './services/oauth-provider.service';
+import { OauthProvider } from './entities/oauth-provider.entity';
 
 dotenv.config(); // needed to access process.env.*
 
@@ -19,10 +21,16 @@ dotenv.config(); // needed to access process.env.*
       secret: process.env.APP_SECRET,
       signOptions: { expiresIn: process.env.JWT_EXPIRATION },
     }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, OauthProvider]),
   ],
   controllers: [AuthController],
-  providers: [UsersService, GoogleStrategy, JwtStrategy, AuthService],
-  exports: [AuthService, JwtModule],
+  providers: [
+    UsersService,
+    GoogleStrategy,
+    JwtStrategy,
+    AuthService,
+    OAuthProviderService,
+  ],
+  exports: [AuthService, OAuthProviderService, JwtModule],
 })
 export class AuthModule {}

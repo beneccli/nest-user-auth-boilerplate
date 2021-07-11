@@ -1,4 +1,4 @@
-import { Controller, UseGuards } from '@nestjs/common';
+import { Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { Crud, CrudAuth } from '@nestjsx/crud';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { User } from '../entities/user.entity';
@@ -28,4 +28,10 @@ import { UsersService } from '../users.service';
 @Controller('me')
 export class MeController {
   constructor(public service: UsersService) {}
+
+  @Get('test')
+  public test(@Req() request) {
+    const { user } = request;
+    return `Hello ${user.email} ;)`;
+  }
 }
