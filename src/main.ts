@@ -13,8 +13,8 @@ async function bootstrap() {
   app.use(cookieParser());
 
   const options = new DocumentBuilder()
-    .setTitle('Nectasia')
-    .setDescription('Simple CRUD for managing nectasia business logic')
+    .setTitle('nest-user-auth-boilerplate')
+    .setDescription('Simple CRUD for managing business logic')
     .setVersion('1.0')
     .build();
 
